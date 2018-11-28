@@ -173,8 +173,8 @@ $(document).ready(function () {
 
   <div id="feature-engineering" class="section level3">
 <pre class="r"><code>
-## FEATURE ENGINEERING &quot; 
-# Si aggregano le variabili sulla base di boxplot, tabelle di contingenze e anche su ragionamenti logici, ad esempio “neighbourhood” sarà aggregata anche sulla base della cartina dalla quale vediamo le zone. Vengono inoltre costruite delle variabili nuove, solitamente binarie. &quot; 
+## FEATURE ENGINEERING &lt; 
+# Si aggregano le variabili sulla base di boxplot, tabelle di contingenze e anche su ragionamenti logici, ad esempio “neighbourhood” sarà aggregata anche sulla base della cartina dalla quale vediamo le zone. Vengono inoltre costruite delle variabili nuove, solitamente binarie. &lt;
 full$MS.SubClassAGG &lt;-full$MS.SubClass
 full$MS.SubClassAGG[full$MS.SubClass==&quot;45&quot;] &lt;- &quot;50&quot; 
 full$MS.SubClassAGG[full$MS.SubClass==&quot;150&quot;] &lt;- &quot;160&quot;
@@ -474,12 +474,8 @@ full[which(is.na(full$Lot.Frontage)),&quot;Lot.Frontage&quot;] &lt;-  predict(lm
 
 #---------------------------------------------------------------------------#
 ## controllo gli outliers
-aggr(full, prop = FALSE, combined = TRUE, numbers = TRUE, sortVars = TRUE, sortCombs = TRUE, plot=F)</code></pre>
-<pre><code>
- Missings in variables:
-  Variable Count
- SalePrice  1470</code></pre>
-<pre class="r"><code>#---------------------------------------------------------------------------#
+# aggr(full, prop = FALSE, combined = TRUE, numbers = TRUE, sortVars = TRUE, sortCombs = TRUE, plot=F)
+#---------------------------------------------------------------------------#
 # trasformo i dati in factor e numeric
 
 write.csv(full[,-c(1,2,11)], file = &quot;fullnew.csv&quot;)
@@ -576,10 +572,9 @@ gbm = train(var_gbm,
             trControl = ctrl, 
             tuneGrid = grid_gbm,
             verbose= FALSE)</div>
-<div id="glmnet---lasso-e-ridge" class="section level3">
-<h3>GLMNET - LASSO E RIDGE</h3>
-<pre class="r"><code>var_lasso_ridge &lt;- as.formula(
-  log(SalePrice) ~ Lot.Frontage + MS.SubClass + MS.ZoningAGG + Lot.Area + Alley + Lot.ShapeAGG + 
+
+## GLMNET - LASSO E RIDGE
+log(SalePrice) ~ Lot.Frontage + MS.SubClass + MS.ZoningAGG + Lot.Area + Alley + Lot.ShapeAGG + 
     Land.ContourAGG + Lot.Config + Land.SlopeAGG + Neighborhood + Condition.1AGG + Bldg.TypeAGG +
     House.StyleAGG + Overall.QualAGG + Overall.CondAGG + anni + remod + Mas.Vnr.TypeAGG + Mas.Vnr.Area + masonry + Exter.Qual + Exter.Cond +
     FoundationAGG + Bsmt.Qual + basement + Bsmt.CondAGG + Bsmt.Exposure + 
@@ -617,9 +612,8 @@ for (i in 1:50) {
   yhat_lr &lt;- cbind(yhat_lr,exp(predict(my_lasso_ridge, newdata = test)))
 }</code></pre>
 </div>
-<div id="results---weighted-means-of-the-two-models" class="section level3">
-<h3>RESULTS - weighted means of the two models</h3>
-<pre class="r"><code>yhat_gbm = exp(predict(gbm, newdata=test))
+
+## RESULTS - weighted means of the two models
 yhat_lr &lt;- apply(X = yhat_lr, MARGIN = 1 , FUN = mean, trim = .2)
 
 media &lt;- 0.6*yhat_gbm+0.4*yhat_lr
