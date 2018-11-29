@@ -531,11 +531,11 @@ col_names_int &lt;- names(names_int)
 full[,col_names_int] &lt;- lapply(full[,col_names_int] , factor)
 
 ## -------------------------------------------------------------------------#
-write.csv(full, './new_data/full.csv', row.names = F)
+write.csv(full, './full.csv', row.names = F)
 
 ### TRAIN &amp; TEST
 
-full &lt;- read.csv('./new_data/full.csv', header = TRUE, stringsAsFactors = TRUE)
+full &lt;- read.csv('./full.csv', header = TRUE, stringsAsFactors = TRUE)
 train &lt;- full[1:n-1,]
 test &lt;- full[n:(n+m), ]
 
